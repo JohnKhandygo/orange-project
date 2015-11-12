@@ -1,0 +1,17 @@
+# idea
+.idea
+*.iml
+*.ipr
+
+# gradle
+.gradle
+build
+!gradle-wrapper.jar
+
+# java
+*.class
+*.jar
+
+# others
+hs_err_pid*
+*.log

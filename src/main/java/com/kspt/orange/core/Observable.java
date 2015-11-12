@@ -1,5 +1,11 @@
 package com.kspt.orange.core;
 
 public interface Observable<D> {
-  <T> Observable<T> register(final Observer<D, T> observer);
+  default <T> Observable<T> register(final Observer<D, T> observer) {
+    final Observable<T> output = observer.subscribeOn(this);
+    observer.subscribeOn(this);
+    return output;
+  }
+
+  void emit(final D element);
 }

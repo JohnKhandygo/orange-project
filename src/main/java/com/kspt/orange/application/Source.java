@@ -1,9 +1,9 @@
 package com.kspt.orange.application;
 
-import com.kspt.orange.core.Observable;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
+import java.util.Collection;
 
-public interface Source<Q extends Query, D extends Data> extends Observable<D> {
-  void filter(final Q query);
+public interface Source<Q extends Query, D extends Data> {
+  Collection<D> filter(final Q query);
 }

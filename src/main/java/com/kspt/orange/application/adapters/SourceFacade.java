@@ -21,7 +21,7 @@ public class SourceFacade<D extends Data, Q extends Query> implements Gateway<D,
 
   @Override
   public void forward(final Q query) {
-    source.filter(query).stream().forEach(output::emit);
+    source.get(query).stream().forEach(output::emit);
   }
 
   @Override

@@ -8,7 +8,7 @@ import java.util.Collection;
 public class TwitterSource<Q extends Query, D extends Data> implements Source<Q, D> {
 
   @Override
-  public Collection<D> filter(final Q query) {
+  public Collection<D> get(final Q query) {
     return null;
   }
 }

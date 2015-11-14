@@ -1,9 +1,11 @@
 package com.kspt.orange.application;
 
-import com.kspt.orange.core.entities.Subscription;
+import com.kspt.orange.core.entities.Data;
+import com.kspt.orange.core.entities.Query;
+import com.kspt.orange.core.ports.Gateway;
 
 public interface SubscriptionBuilder {
   SubscriptionBuilder onAuthor(final int id);
 
-  Subscription from(final Source source);
+  <Q extends Query, D extends Data> Gateway<Q, D> from(final DataSource<Q, D> dataSource);
 }

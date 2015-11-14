@@ -1,27 +1,27 @@
 package com.kspt.orange.application.adapters;
 
-import com.kspt.orange.application.Source;
-import com.kspt.orange.core.Observable;
+import com.kspt.orange.application.DataSource;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
 import com.kspt.orange.core.ports.Gateway;
+import com.kspt.orange.core.streams.Observable;
 
-public class SourceFacade<D extends Data, Q extends Query> implements Gateway<D, Q> {
+public class DataSourceFacade<Q extends Query, D extends Data> implements Gateway<Q, D> {
 
-  private final Source<Q, D> source;
+  private final DataSource<Q, D> dataSource;
 
   private final Observable<D> output;
 
-  public SourceFacade(
-      final Source<Q, D> source,
+  public DataSourceFacade(
+      final DataSource<Q, D> dataSource,
       final Observable<D> output) {
-    this.source = source;
+    this.dataSource = dataSource;
     this.output = output;
   }
 
   @Override
   public void forward(final Q query) {
-    source.get(query).stream().forEach(output::emit);
+    dataSource.get(query).stream().forEach(output::emit);
   }
 
   @Override

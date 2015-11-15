@@ -2,10 +2,15 @@ package com.kspt.orange.core.streams;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import com.pholser.junit.quickcheck.ForAll;
+import com.pholser.junit.quickcheck.generator.InRange;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.theories.Theories;
+import org.junit.contrib.theories.Theory;
+import org.junit.runner.RunWith;
 import static org.mockito.Matchers.any;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
@@ -17,7 +22,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.stream.IntStream;
 
+@RunWith(Theories.class)
 public class ObserverTest {
 
   @Rule
@@ -48,7 +55,7 @@ public class ObserverTest {
   private void newObserver() {
     final BlockingQueue<Object> queue = Queues.newLinkedBlockingQueue();
     scheduler = Executors.newSingleThreadScheduledExecutor();
-    observer = new Observer<>(handler, queue, scheduler, 500, 500, executor, output);
+    observer = new Observer<>(handler, queue, scheduler, 100, 100, executor, output);
   }
 
   @Test
@@ -57,31 +64,31 @@ public class ObserverTest {
     verifyZeroInteractions(executor, handler, output);
   }
 
-  @Test
-  public void whenSomethingEmittedIn_ExecutorSubmitsTask()
+  @Theory
+  public void whenSomethingEmittedInSeveralTimes_ExecutorSubmitsTaskTheSameNumberOfTimes(
+      final @ForAll(sampleSize = 5) @InRange(min = "1", max = "5") int numberOfEmits)
   throws Exception {
     mockExecutorAsDirectCaller();
-    runAndWaitUntilSomethingEmittedOut();
-    verify(executor, times(1)).submit(any(Runnable.class));
-    verify(handler, times(1)).observe(any(Object.class));
+    runAndWaitUntilSomethingEmittedOutNTimes(numberOfEmits);
+    verify(executor, times(numberOfEmits)).submit(any(Runnable.class));
+    verify(handler, times(numberOfEmits)).observe(any(Object.class));
     verify(handler, times(0)).onError(any(Exception.class));
   }
 
-  private void runAndWaitUntilSomethingEmittedOut()
+  private void runAndWaitUntilSomethingEmittedOutNTimes(final int numberOfEmits)
   throws InterruptedException {
-    CountDownLatch latch = setUpTerminateConditionOnEmittingOut();
-    run();
+    CountDownLatch latch = setUpTerminateConditionOnEmittingOutNTimes(numberOfEmits);
+    subscribeOnStreamAndEmitNObjectsIn(numberOfEmits);
     latch.await();
   }
 
-  private void run() {
-    final Object object = mock(Object.class);
+  private void subscribeOnStreamAndEmitNObjectsIn(final int objectsToEmit) {
     observer.subscribeOn(input);
-    input.emit(object);
+    IntStream.range(0, objectsToEmit).mapToObj(i -> mock(Object.class)).forEach(input::emit);
   }
 
-  private CountDownLatch setUpTerminateConditionOnEmittingOut() {
-    final CountDownLatch latch = new CountDownLatch(1);
+  private CountDownLatch setUpTerminateConditionOnEmittingOutNTimes(final int numberOfEmitsOut) {
+    final CountDownLatch latch = new CountDownLatch(numberOfEmitsOut);
     doAnswer(countDownAndReturnNull(latch)).when(output).emit(any(Object.class));
     return latch;
   }
@@ -124,7 +131,7 @@ public class ObserverTest {
   private void runAndWaitUntilExceptionOccurred()
   throws InterruptedException {
     final CountDownLatch latch = setupTerminateConditionOnExceptionHandler();
-    run();
+    subscribeOnStreamAndEmitNObjectsIn(1);
     latch.await();
   }
 

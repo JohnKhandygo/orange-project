@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.stubbing.Answer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -67,7 +68,7 @@ public class ObservableTest {
   @Test
   public void whenSomethingEmittedIn_HandlerCalled()
   throws Exception {
-    CountDownLatch latch = setUpTerminateOnHandler();
+    CountDownLatch latch = setUpTerminateConditionOnHandler();
     run();
     latch.await();
     verify(executor, times(1)).submit(any(Runnable.class));
@@ -80,20 +81,23 @@ public class ObservableTest {
     input.emit(object);
   }
 
-  private CountDownLatch setUpTerminateOnHandler() {
+  private CountDownLatch setUpTerminateConditionOnHandler() {
     final CountDownLatch latch = new CountDownLatch(1);
-    doAnswer(invocation -> {
+    doAnswer(countDownAndReturnNull(latch)).when(handler).observe(any(Object.class));
+    return latch;
+  }
+
+  private Answer countDownAndReturnNull(final CountDownLatch latch) {
+    return invocation -> {
       latch.countDown();
       return null;
-    }).when(handler).observe(any(Object.class));
-    return latch;
+    };
   }
 
   @Test
   public void whenSomethingEmittedInAndHandlerProducesIt_ItsEmittedOut()
   throws Exception {
-    doAnswer(invocation -> invocation.getArgumentAt(0, Object.class))
-        .when(handler).observe(anyObject());
+    doAnswer(identity()).when(handler).observe(anyObject());
     final CountDownLatch latch = setUpTerminateOnEmittingOut();
     run();
     latch.await();
@@ -102,12 +106,13 @@ public class ObservableTest {
     verify(output, times(1)).emit(anyObject());
   }
 
+  private Answer identity() {
+    return invocation -> invocation.getArgumentAt(0, Object.class);
+  }
+
   private CountDownLatch setUpTerminateOnEmittingOut() {
     final CountDownLatch latch = new CountDownLatch(1);
-    doAnswer(invocation -> {
-      latch.countDown();
-      return null;
-    }).when(output).emit(any(Object.class));
+    doAnswer(countDownAndReturnNull(latch)).when(output).emit(any(Object.class));
     return latch;
   }
 

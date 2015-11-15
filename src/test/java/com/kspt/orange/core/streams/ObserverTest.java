@@ -61,19 +61,17 @@ public class ObserverTest {
   public void whenSomethingEmittedIn_ExecutorSubmitsTask()
   throws Exception {
     mockExecutorAsDirectCaller();
-    CountDownLatch latch = setUpTerminateConditionOnEmittingOut();
-    run();
-    latch.await();
+    runAndWaitUntilSomethingEmittedOut();
     verify(executor, times(1)).submit(any(Runnable.class));
     verify(handler, times(1)).observe(any(Object.class));
     verify(handler, times(0)).onError(any(Exception.class));
   }
 
-  private void mockExecutorAsDirectCaller() {
-    doAnswer(invocation -> {
-      invocation.getArgumentAt(0, Runnable.class).run();
-      return null;
-    }).when(executor).submit(any(Runnable.class));
+  private void runAndWaitUntilSomethingEmittedOut()
+  throws InterruptedException {
+    CountDownLatch latch = setUpTerminateConditionOnEmittingOut();
+    run();
+    latch.await();
   }
 
   private void run() {
@@ -84,33 +82,37 @@ public class ObserverTest {
 
   private CountDownLatch setUpTerminateConditionOnEmittingOut() {
     final CountDownLatch latch = new CountDownLatch(1);
-    doAnswer(invocation -> {
+    doAnswer(countDownAndReturnNull(latch)).when(output).emit(any(Object.class));
+    return latch;
+  }
+
+  private Answer countDownAndReturnNull(final CountDownLatch latch) {
+    return invocation -> {
       latch.countDown();
       return null;
-    }).when(output).emit(any(Object.class));
-    return latch;
+    };
+  }
+
+  private void mockExecutorAsDirectCaller() {
+    doAnswer(directCallAndReturnNull()).when(executor).submit(any(Runnable.class));
+  }
+
+  private Answer directCallAndReturnNull() {
+    return invocation -> {
+      invocation.getArgumentAt(0, Runnable.class).run();
+      return null;
+    };
   }
 
   @Test
   public void whenExecutorThrowsException_itsHandledAndNothingIsEmitted()
   throws Exception {
     doAnswer(throwException()).when(executor).submit(any(Runnable.class));
-    final CountDownLatch latch = setupTerminateConditionOnExceptionHandler();
-    run();
-    latch.await();
+    runAndWaitUntilExceptionOccurred();
     verify(executor, times(1)).submit(any(Runnable.class));
     verify(handler, times(0)).observe(any(Object.class));
     verify(handler, times(1)).onError(any(Exception.class));
     verify(output, times(0)).emit(any(Object.class));
-  }
-
-  private CountDownLatch setupTerminateConditionOnExceptionHandler() {
-    final CountDownLatch latch = new CountDownLatch(1);
-    doAnswer(invocation -> {
-      latch.countDown();
-      return null;
-    }).when(handler).onError(any(Exception.class));
-    return latch;
   }
 
   private Answer throwException() {
@@ -119,14 +121,25 @@ public class ObserverTest {
     };
   }
 
+  private void runAndWaitUntilExceptionOccurred()
+  throws InterruptedException {
+    final CountDownLatch latch = setupTerminateConditionOnExceptionHandler();
+    run();
+    latch.await();
+  }
+
+  private CountDownLatch setupTerminateConditionOnExceptionHandler() {
+    final CountDownLatch latch = new CountDownLatch(1);
+    doAnswer(countDownAndReturnNull(latch)).when(handler).onError(any(Exception.class));
+    return latch;
+  }
+
   @Test
   public void whenObserveThrowsException_itsHandledAndNothingIsEmitted()
   throws Exception {
     mockExecutorAsDirectCaller();
     doAnswer(throwException()).when(handler).observe(any(Object.class));
-    final CountDownLatch latch = setupTerminateConditionOnExceptionHandler();
-    run();
-    latch.await();
+    runAndWaitUntilExceptionOccurred();
     verify(executor, times(1)).submit(any(Runnable.class));
     verify(handler, times(1)).observe(any(Object.class));
     verify(handler, times(1)).onError(any(Exception.class));
@@ -138,9 +151,7 @@ public class ObserverTest {
   throws Exception {
     mockExecutorAsDirectCaller();
     doAnswer(throwException()).when(output).emit(any(Object.class));
-    final CountDownLatch latch = setupTerminateConditionOnExceptionHandler();
-    run();
-    latch.await();
+    runAndWaitUntilExceptionOccurred();
     verify(executor, times(1)).submit(any(Runnable.class));
     verify(handler, times(1)).observe(any(Object.class));
     verify(handler, times(1)).onError(any(Exception.class));

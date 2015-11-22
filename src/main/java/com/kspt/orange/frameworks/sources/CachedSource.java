@@ -1,7 +1,7 @@
 package com.kspt.orange.frameworks.sources;
 
 import static com.google.common.collect.Lists.newArrayList;
-import com.kspt.orange.application.DataSource;
+import com.kspt.orange.application.Source;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
 import static java.util.stream.Collectors.toList;
@@ -13,7 +13,7 @@ interface QueryToPredicateConverter<Q extends Query, D extends Data> {
   Predicate<D> convert(final Q query);
 }
 
-public class CachedSource<Q extends Query, D extends Data> implements DataSource<Q, D> {
+public class CachedSource<Q extends Query, D extends Data> implements Source<Q, D> {
 
   final List<D> cached;
 

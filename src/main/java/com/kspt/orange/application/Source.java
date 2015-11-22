@@ -2,7 +2,8 @@ package com.kspt.orange.application;
 
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
+import java.util.Collection;
 
-public interface MetadataSource<Q extends Query, D extends Data> extends DataSource<Q, D> {
-  Data get(final String id);
+public interface Source<Q extends Query, D extends Data> {
+  Collection<D> get(final Q query);
 }

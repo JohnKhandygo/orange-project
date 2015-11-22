@@ -1,6 +1,6 @@
 package com.kspt.orange.application.adapters;
 
-import com.kspt.orange.application.DataSource;
+import com.kspt.orange.application.Source;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
 import com.kspt.orange.core.ports.Gateway;
@@ -26,13 +26,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.stream.IntStream;
 
 @RunWith(Theories.class)
-public class DataSourceFacadeTest {
+public class SourceFacadeTest {
 
   @Rule
   public MockitoRule rule = MockitoJUnit.rule();
 
   @Mock
-  DataSource<Query, Data> source;
+  Source<Query, Data> source;
 
   @Mock
   Observable<Data> output;
@@ -42,7 +42,7 @@ public class DataSourceFacadeTest {
   @Before
   public void setUp()
   throws Exception {
-    gateway = new DataSourceFacade<>(source, output);
+    gateway = new SourceFacade<>(source, output);
   }
 
   @Test

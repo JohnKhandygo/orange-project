@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.twitter;
 
-import com.kspt.orange.application.DataSource;
+import com.kspt.orange.application.Source;
 import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.ApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.TwitterDataApi;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
-public class TwitterDataSource implements DataSource<TwitterDataQuery, TwitterData> {
+public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> {
 
   static final String HOST = "https://api.twitter.com";
 

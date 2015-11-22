@@ -7,9 +7,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
 interface Handler<T1, T2> {
-  abstract void onError(final Exception exception);
+  void onError(final Exception exception);
 
-  abstract T2 observe(final T1 element);
+  T2 observe(final T1 element);
 }
 
 public class Observer<T1, T2> {

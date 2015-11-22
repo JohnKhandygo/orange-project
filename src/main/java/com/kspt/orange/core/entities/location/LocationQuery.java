@@ -8,9 +8,12 @@ public class LocationQuery implements Query {
 
   private final double longitude;
 
-  public LocationQuery(final double latitude, final double longitude) {
+  private final double radius;
+
+  public LocationQuery(final double latitude, final double longitude, final double radius) {
     this.latitude = latitude;
     this.longitude = longitude;
+    this.radius = radius;
   }
 
   public double latitude() {
@@ -19,5 +22,9 @@ public class LocationQuery implements Query {
 
   public double longitude() {
     return longitude;
+  }
+
+  public double radius() {
+    return radius;
   }
 }

@@ -18,9 +18,9 @@ public class TwitterDataQuery implements Query {
 
   private final int count;
 
-  private final Optional<String> min;
+  private final Optional<Long> min;
 
-  private final Optional<String> max;
+  private final Optional<Long> max;
 
   private TwitterDataQuery(
       final Optional<String> query,
@@ -29,8 +29,8 @@ public class TwitterDataQuery implements Query {
       final double radius,
       final String resultType,
       final int count,
-      final Optional<String> min,
-      final Optional<String> max) {
+      final Optional<Long> min,
+      final Optional<Long> max) {
     this.query = query;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -65,18 +65,18 @@ public class TwitterDataQuery implements Query {
     return count;
   }
 
-  public Optional<String> min() {
+  public Optional<Long> min() {
     return min;
   }
 
-  public Optional<String> max() {
+  public Optional<Long> max() {
     return max;
   }
 
   public static TwitterDataQuery newOne(final ByLocation byLocation) {
     final Optional<String> query = Optional.empty();
-    final Optional<String> min = Optional.empty();
-    final Optional<String> max = Optional.empty();
+    final Optional<Long> min = Optional.empty();
+    final Optional<Long> max = Optional.empty();
     final String defaultResultType = "mixed";
     final int defaultCount = 15;
     return new TwitterDataQuery(

@@ -18,12 +18,13 @@ public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> 
 
   @Override
   public Collection<TwitterData> get(final TwitterDataQuery query) {
-    final String geo = formatGeo(query);
+    /*final String geo = formatGeo(query);
     return query.query().map(q ->
         api.search(q, geo, query.resultType(), query.count(), query.min().get(), query.max().get())
     ).orElse(
         api.search(geo, query.resultType(), query.count(), query.min().get(), query.max().get())
-    ).statuses();
+    ).statuses();*/
+    return null;
   }
 
   private String formatGeo(final TwitterDataQuery query) {

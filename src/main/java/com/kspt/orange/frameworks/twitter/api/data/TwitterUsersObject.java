@@ -15,14 +15,14 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwitterUsersObject {
 
-  private final String nextCursor;
+  private final long nextCursor;
 
   private final List<User> users;
 
   @JsonCreator
 
   public TwitterUsersObject(
-      final @JsonProperty("next_cursor_str") String nextCursor,
+      final @JsonProperty("next_cursor") long nextCursor,
       final @JsonProperty("users") List<User> users) {
     this.nextCursor = nextCursor;
     this.users = users;

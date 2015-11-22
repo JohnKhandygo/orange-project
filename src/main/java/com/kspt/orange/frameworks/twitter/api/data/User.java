@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
-  private final String id;
+  private final long id;
 
   private final String name;
 
@@ -21,7 +21,7 @@ public class User {
 
   @JsonCreator
   public User(
-      final @JsonProperty("id_str") String id,
+      final @JsonProperty("id") long id,
       final @JsonProperty("name") String name,
       final @JsonProperty("screen_name") String screenName) {
     this.id = id;

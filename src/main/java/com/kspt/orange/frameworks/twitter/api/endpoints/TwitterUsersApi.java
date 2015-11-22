@@ -10,12 +10,12 @@ import java.util.List;
 
 @Path("1.1/users")
 @Produces(MediaType.APPLICATION_JSON)
-public interface TwitterUsersApi extends AuthenticatedUsersApi {
+public interface TwitterUsersApi {
 
   @Path("/show.json")
   @GET
   User searchById(
-      final @QueryParam("user_id") String userId,
+      final @QueryParam("user_id") long userId,
       final @QueryParam("include_entities") boolean includeEntities);
 
   @Path("/show.json")
@@ -27,7 +27,7 @@ public interface TwitterUsersApi extends AuthenticatedUsersApi {
   @Path("/lookup.json")
   @GET
   List<User> search(
-      final @QueryParam("user_id") String userId,
-      final @QueryParam("screen_name") String screenName,
+      final @QueryParam("user_id") String userIds,
+      final @QueryParam("screen_name") String screenNames,
       final @QueryParam("include_entities") boolean includeEntities);
 }

@@ -20,15 +20,15 @@ public interface TwitterDataApi {
       final @QueryParam("geocode") String geocode,
       final @QueryParam("result_type") String resultType,
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") String min,
-      final @QueryParam("max_id") String max);
+      final @QueryParam("since_id") long min,
+      final @QueryParam("max_id") long max);
 
   @GET
   TwitterDataObject search(
       final @QueryParam("geocode") String geocode,
       final @QueryParam("result_type") String resultType,
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") String min,
-      final @QueryParam("max_id") String max);
+      final @QueryParam("since_id") long min,
+      final @QueryParam("max_id") long max);
 }
 

@@ -13,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwitterMetadata {
-  private final String max;
+  private final long max;
 
   @JsonCreator
-  TwitterMetadata(final @JsonProperty("max_id_str") String max) {
+  TwitterMetadata(final @JsonProperty("max_id") long max) {
     this.max = max;
   }
 }

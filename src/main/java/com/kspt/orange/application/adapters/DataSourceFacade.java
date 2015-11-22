@@ -29,4 +29,3 @@ public class DataSourceFacade<Q extends Query, D extends Data> implements Gatewa
     return output;
   }
 }
-

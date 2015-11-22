@@ -1,13 +1,13 @@
 package com.kspt.orange.frameworks.twitter;
 
 import com.kspt.orange.application.DataSource;
-import com.kspt.orange.core.entities.location.Location;
-import com.kspt.orange.core.entities.location.LocationQuery;
 import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.ApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.TwitterDataApi;
+import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import static java.lang.String.format;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.OAuthRequest;
@@ -17,28 +17,34 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
-public class TwitterDataSource implements DataSource<LocationQuery, Location> {
+public class TwitterDataSource implements DataSource<TwitterDataQuery, TwitterData> {
 
   static final String HOST = "https://api.twitter.com";
 
   private final TwitterDataApi api;
 
-  private final int granularity;
-
-  private TwitterDataSource(final TwitterDataApi api, final int granularity) {
+  private TwitterDataSource(final TwitterDataApi api) {
     this.api = api;
-    this.granularity = granularity;
   }
 
   @Override
-  public Collection<Location> get(final LocationQuery query) {
-    return null;
+  public Collection<TwitterData> get(final TwitterDataQuery query) {
+    final String geo = formatGeo(query);
+    return query.query().map(q ->
+        api.search(q, geo, query.resultType(), query.count(), query.min().get(), query.max().get())
+    ).orElse(
+        api.search(geo, query.resultType(), query.count(), query.min().get(), query.max().get())
+    ).statuses();
+  }
+
+  private String formatGeo(final TwitterDataQuery query) {
+    return format("%f.2,%f.2,%f.2km", query.latitude(), query.longitude(), query.radius());
   }
 
   public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {
     final TwitterRequestInterceptor interceptor = new TwitterRequestInterceptor(credentials);
     TwitterDataApi api = ApiBuilder.build(HOST, TwitterDataApi.class, interceptor);
-    return new TwitterDataSource(api, 10);
+    return new TwitterDataSource(api);
   }
 }
 

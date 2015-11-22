@@ -1,6 +1,6 @@
 package com.kspt.orange.core.entities.location;
 
-public class ByAuthor extends LocationQuery {
+public class ByAuthor extends ByLocation {
 
   private final String author;
 

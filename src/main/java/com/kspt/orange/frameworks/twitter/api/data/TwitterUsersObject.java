@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 @JsonAutoDetect(
     fieldVisibility = JsonAutoDetect.Visibility.ANY,
@@ -12,20 +13,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     setterVisibility = JsonAutoDetect.Visibility.NONE,
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
-  private final String id;
+public class TwitterUsersObject {
 
-  private final String name;
+  private final String nextCursor;
 
-  private final String screenName;
+  private final List<User> users;
 
   @JsonCreator
-  public User(
-      final @JsonProperty("id_str") String id,
-      final @JsonProperty("name") String name,
-      final @JsonProperty("screen_name") String screenName) {
-    this.id = id;
-    this.name = name;
-    this.screenName = screenName;
+
+  public TwitterUsersObject(
+      final @JsonProperty("next_cursor_str") String nextCursor,
+      final @JsonProperty("users") List<User> users) {
+    this.nextCursor = nextCursor;
+    this.users = users;
   }
 }

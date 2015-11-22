@@ -14,15 +14,23 @@ import java.util.List;
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwitterDataObject {
-  private final List<Status> statuses;
+  private final List<TwitterData> statuses;
 
-  private final SearchMetadata metadata;
+  private final TwitterMetadata metadata;
 
   @JsonCreator
   public TwitterDataObject(
-      final @JsonProperty("statuses") List<Status> statuses,
-      final @JsonProperty("search_metadata") SearchMetadata metadata) {
+      final @JsonProperty("statuses") List<TwitterData> statuses,
+      final @JsonProperty("search_metadata") TwitterMetadata metadata) {
     this.statuses = statuses;
     this.metadata = metadata;
+  }
+
+  public List<TwitterData> statuses() {
+    return statuses;
+  }
+
+  public TwitterMetadata metadata() {
+    return metadata;
   }
 }

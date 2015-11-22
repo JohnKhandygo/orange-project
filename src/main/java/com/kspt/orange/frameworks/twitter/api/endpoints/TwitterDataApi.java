@@ -1,4 +1,4 @@
-package com.kspt.orange.frameworks.twitter.api;
+package com.kspt.orange.frameworks.twitter.api.endpoints;
 
 import com.kspt.orange.frameworks.twitter.api.data.TwitterDataObject;
 import javax.ws.rs.GET;

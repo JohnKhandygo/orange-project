@@ -2,24 +2,13 @@ package com.kspt.orange.frameworks.twitter;
 
 import com.kspt.orange.application.Source;
 import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
-import com.kspt.orange.frameworks.twitter.api.ApiBuilder;
-import com.kspt.orange.frameworks.twitter.api.TwitterDataApi;
+import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
+import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterDataApi;
 import static java.lang.String.format;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.TwitterApi;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
 
 public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> {
-
-  static final String HOST = "https://api.twitter.com";
 
   private final TwitterDataApi api;
 
@@ -42,44 +31,8 @@ public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> 
   }
 
   public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {
-    final TwitterRequestInterceptor interceptor = new TwitterRequestInterceptor(credentials);
-    TwitterDataApi api = ApiBuilder.build(HOST, TwitterDataApi.class, interceptor);
+    TwitterDataApi api = TwitterApiBuilder.build(TwitterDataApi.class, credentials);
     return new TwitterDataSource(api);
   }
 }
 
-class TwitterRequestInterceptor implements RequestInterceptor {
-
-  private final AuthenticationCredentials credentials;
-
-  public TwitterRequestInterceptor(
-      final AuthenticationCredentials credentials) {
-    this.credentials = credentials;
-  }
-
-  @Override
-  public void apply(final RequestTemplate template) {
-    final OAuthRequest request = buildAuthenticationRequest(template);
-    OAuthService service = buildAuthenticationService();
-    service.signRequest(credentials.userToken(), request);
-    template.header("Authorization", extractAuthenticationHeader(request));
-  }
-
-  private String extractAuthenticationHeader(final OAuthRequest request) {
-    final Map<String, String> headers = request.getHeaders();
-    return Objects.requireNonNull(headers.get("Authorization"));
-  }
-
-  private OAuthService buildAuthenticationService() {
-    return new ServiceBuilder()
-        .provider(TwitterApi.class)
-        .apiKey(credentials.applicationToken().getToken())
-        .apiSecret(credentials.applicationToken().getSecret())
-        .build();
-  }
-
-  private OAuthRequest buildAuthenticationRequest(final RequestTemplate template) {
-    final String url = TwitterDataSource.HOST + template.url();
-    return new OAuthRequest(Verb.valueOf(template.method()), url + template.queryLine());
-  }
-}

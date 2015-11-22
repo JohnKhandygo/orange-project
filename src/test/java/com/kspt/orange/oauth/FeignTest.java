@@ -1,7 +1,7 @@
 package com.kspt.orange.oauth;
 
-import com.kspt.orange.frameworks.twitter.api.TwitterDataApi;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterDataObject;
+import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterDataApi;
 import feign.Feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

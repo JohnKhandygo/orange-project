@@ -1,4 +1,4 @@
-package com.kspt.orange.application;
+package com.kspt.orange.application.ports;
 
 import com.kspt.orange.application.adapters.Gateway;
 import com.kspt.orange.core.entities.Data;

@@ -5,12 +5,24 @@ import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.User;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterUsersApi;
+import static java.lang.String.format;
 import org.junit.Test;
 import org.scribe.model.Token;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FeignTest {
+
+  @Test
+  public void test2() {
+    final Locale ruLocale = Locale.forLanguageTag("RU");
+    final Locale enLocale = Locale.forLanguageTag("US");
+    final String ruFormat = format(ruLocale, "%.2f,%.2f,%.2f", 1.54, 1.1, 2.222222222);
+    final String enFormat = format(enLocale, "%.2f,%.2f,%.2f", 1.54, 1.1, 2.222222222);
+    System.out.println(ruLocale + ": " + ruFormat);
+    System.out.println(enLocale + ": " + enFormat);
+  }
 
   @Test
   public void test() {

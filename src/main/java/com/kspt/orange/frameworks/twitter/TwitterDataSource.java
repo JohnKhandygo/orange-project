@@ -6,7 +6,7 @@ import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterDataApi;
-import static java.lang.String.format;
+import com.kspt.orange.frameworks.twitter.api.queries.TwitterDataQuery;
 import java.util.Collection;
 
 public class TwitterDataSource
@@ -21,10 +21,6 @@ public class TwitterDataSource
   @Override
   public Collection<TwitterData> get(final BoundedQuery<TwitterDataQuery> query) {
     return null;
-  }
-
-  private String formatGeo(final TwitterDataQuery query) {
-    return format("%f.2,%f.2,%f.2km", query.latitude(), query.longitude(), query.radius());
   }
 
   public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {

@@ -51,4 +51,12 @@ public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
   public Observable<D> output() {
     return output;
   }
+
+  public static <Q1 extends Query, Q2 extends Query, D extends Data> Gateway<Q1, Q2, D>
+  newOne(
+      final CompletionStrategy<Q1, Q2> completion,
+      final QueryingStrategy<Q1, BoundedQuery<Q1>> querying,
+      final Source<Q2, D> source) {
+    return new Gateway<>(querying, completion, source, Observable.newOne());
+  }
 }

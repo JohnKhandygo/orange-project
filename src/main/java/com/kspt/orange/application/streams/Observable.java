@@ -1,12 +1,13 @@
 package com.kspt.orange.application.streams;
 
+import com.google.common.collect.Lists;
 import java.util.Collection;
 
 public class Observable<D> {
 
   private final Collection<Observer<D, ?>> registered;
 
-  protected Observable(final Collection<Observer<D, ?>> registered) {
+  Observable(final Collection<Observer<D, ?>> registered) {
     this.registered = registered;
   }
 
@@ -18,5 +19,9 @@ public class Observable<D> {
 
   public void emit(final D element) {
     registered.stream().forEach(observer -> observer.input.add(element));
+  }
+
+  public static <D> Observable<D> newOne() {
+    return new Observable<>(Lists.newArrayList());
   }
 }

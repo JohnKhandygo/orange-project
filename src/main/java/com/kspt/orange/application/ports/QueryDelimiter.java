@@ -1,11 +1,11 @@
 package com.kspt.orange.application.ports;
 
 import com.kspt.orange.core.entities.Data;
+import com.kspt.orange.core.entities.DataCollection;
 import com.kspt.orange.core.entities.Query;
-import java.util.Collection;
 
 @FunctionalInterface
 public interface QueryDelimiter<Q1 extends Query, Q2 extends Query> {
 
-  Q2 next(final Q1 query, final Collection<? extends Data> data);
+  Q2 next(final Q1 query, final DataCollection<? extends Data> data);
 }

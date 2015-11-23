@@ -1,13 +1,16 @@
 package com.kspt.orange.frameworks.twitter;
 
 import com.kspt.orange.application.BoundedQuery;
+import com.kspt.orange.core.entities.DataCollection;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterHomeStatusesApi;
 import com.kspt.orange.frameworks.twitter.api.queries.TwitterHomeDataQuery;
-import java.util.Collection;
+import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.toList;
+import java.util.List;
 
 public class TwitterHomeDataSource
     implements Source<BoundedQuery<TwitterHomeDataQuery>, TwitterData> {
@@ -19,9 +22,9 @@ public class TwitterHomeDataSource
   }
 
   @Override
-  public Collection<TwitterData> get(final BoundedQuery<TwitterHomeDataQuery> boundedQuery) {
+  public DataCollection<TwitterData> get(final BoundedQuery<TwitterHomeDataQuery> boundedQuery) {
     final TwitterHomeDataQuery query = boundedQuery.query();
-    return api.search(
+    final List<TwitterData> found = api.search(
         boundedQuery.count(),
         boundedQuery.last().orElse(null),
         boundedQuery.first().orElse(null),
@@ -29,6 +32,13 @@ public class TwitterHomeDataSource
         query.excludeReplies(),
         query.contributorsDetails(),
         query.includeRts());
+    return formDataCollection(found);
+  }
+
+  private DataCollection<TwitterData> formDataCollection(final List<TwitterData> data) {
+    final List<TwitterData> geotaggedData = data.stream().filter(d -> nonNull(d.geo()))
+        .collect(toList());
+    return new DataCollection<>(geotaggedData);
   }
 
   public static TwitterHomeDataSource newOne(final AuthenticationCredentials credentials) {

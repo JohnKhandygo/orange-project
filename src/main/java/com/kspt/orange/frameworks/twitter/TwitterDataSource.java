@@ -5,9 +5,9 @@ import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
+import com.kspt.orange.frameworks.twitter.api.data.TwitterDataObject;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterDataApi;
 import com.kspt.orange.frameworks.twitter.api.queries.TwitterDataQuery;
-import java.util.Collection;
 
 public class TwitterDataSource
     implements Source<BoundedQuery<TwitterDataQuery>, TwitterData> {
@@ -19,7 +19,7 @@ public class TwitterDataSource
   }
 
   @Override
-  public Collection<TwitterData> get(final BoundedQuery<TwitterDataQuery> boundedQuery) {
+  public TwitterDataObject get(final BoundedQuery<TwitterDataQuery> boundedQuery) {
     final TwitterDataQuery query = boundedQuery.query();
     return api.search(
         query.query().orElse(null),
@@ -27,7 +27,7 @@ public class TwitterDataSource
         boundedQuery.count(),
         boundedQuery.last().orElse(null),
         boundedQuery.first().orElse(null),
-        query.result()).dataCollection();
+        query.result());
   }
 
   public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {

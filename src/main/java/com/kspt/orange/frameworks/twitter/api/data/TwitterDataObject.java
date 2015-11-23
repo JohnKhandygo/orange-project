@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kspt.orange.core.entities.DataCollection;
 import java.util.List;
 
 @JsonAutoDetect(
@@ -13,21 +14,16 @@ import java.util.List;
     setterVisibility = JsonAutoDetect.Visibility.NONE,
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TwitterDataObject {
-  private final List<TwitterData> dataCollection;
+public class TwitterDataObject extends DataCollection<TwitterData> {
 
   private final TwitterMeta meta;
 
   @JsonCreator
   public TwitterDataObject(
-      final @JsonProperty("statuses") List<TwitterData> dataCollection,
+      final @JsonProperty("statuses") List<TwitterData> data,
       final @JsonProperty("search_metadata") TwitterMeta meta) {
-    this.dataCollection = dataCollection;
+    super(data);
     this.meta = meta;
-  }
-
-  public List<TwitterData> dataCollection() {
-    return dataCollection;
   }
 
   public TwitterMeta meta() {

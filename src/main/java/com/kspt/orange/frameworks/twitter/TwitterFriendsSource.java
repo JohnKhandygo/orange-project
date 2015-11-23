@@ -4,10 +4,10 @@ import com.kspt.orange.application.BoundedQuery;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
+import com.kspt.orange.frameworks.twitter.api.data.TwitterUsersObject;
 import com.kspt.orange.frameworks.twitter.api.data.User;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterFriendsApi;
 import com.kspt.orange.frameworks.twitter.api.queries.TwitterFriendsQuery;
-import java.util.Collection;
 
 public class TwitterFriendsSource implements Source<BoundedQuery<TwitterFriendsQuery>, User> {
 
@@ -18,14 +18,14 @@ public class TwitterFriendsSource implements Source<BoundedQuery<TwitterFriendsQ
   }
 
   @Override
-  public Collection<User> get(final BoundedQuery<TwitterFriendsQuery> boundedQuery) {
+  public TwitterUsersObject get(final BoundedQuery<TwitterFriendsQuery> boundedQuery) {
     final TwitterFriendsQuery query = boundedQuery.query();
     return api.search(
         query.id(),
         boundedQuery.count(),
-        boundedQuery.first().orElse(null),
+        boundedQuery.last().orElse(-1L),
         query.skipStatus(),
-        query.includeUserEntities()).users();
+        query.includeUserEntities());
   }
 
   public static TwitterFriendsSource newOne(final AuthenticationCredentials credentials) {

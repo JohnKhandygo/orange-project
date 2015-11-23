@@ -44,7 +44,7 @@ public class CachedSourceTest {
   @Test
   public void whenAnythingSatisfiesQuery_allShouldBeFound() {
     doReturn(anything()).when(converter).convert(any(Query.class));
-    final Collection<Data> found = source.get(query);
+    final Collection<Data> found = source.get(query).data();
     assertThat(found).containsOnlyElementsOf(source.cached);
   }
 
@@ -55,7 +55,7 @@ public class CachedSourceTest {
   @Test
   public void whenNothingSatisfiesQuery_nothingShouldBeFound() {
     doReturn(nothing()).when(converter).convert(any(Query.class));
-    final Collection<Data> found = source.get(query);
+    final Collection<Data> found = source.get(query).data();
     assertThat(found).isEmpty();
   }
 
@@ -67,7 +67,7 @@ public class CachedSourceTest {
   public void whenOnlyOneSatisfiesQuery_thatOneShouldBeReturned() {
     for (final Data pattern : source.cached) {
       doReturn(theOnly(pattern)).when(converter).convert(any(Query.class));
-      final Collection<Data> found = source.get(query);
+      final Collection<Data> found = source.get(query).data();
       assertThat(found).containsOnly(pattern);
     }
   }
@@ -76,9 +76,9 @@ public class CachedSourceTest {
     return d -> d.id() == data.id();
   }
 
-  private Data generateData(final int i) {
+  private Data generateData(final long i) {
     final Data data = mock(Data.class);
-    doReturn(String.valueOf(i)).when(data).id();
+    doReturn(i).when(data).id();
     return data;
   }
 }

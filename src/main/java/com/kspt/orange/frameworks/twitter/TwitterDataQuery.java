@@ -1,7 +1,7 @@
 package com.kspt.orange.frameworks.twitter;
 
 import com.kspt.orange.core.entities.Query;
-import com.kspt.orange.core.entities.location.ByLocation;
+import com.kspt.orange.core.entities.queries.ByLocation;
 import java.util.Optional;
 
 public class TwitterDataQuery implements Query {
@@ -18,9 +18,9 @@ public class TwitterDataQuery implements Query {
 
   private final int count;
 
-  private final Optional<Long> min;
+  private final Optional<Long> first;
 
-  private final Optional<Long> max;
+  private final Optional<Long> last;
 
   private TwitterDataQuery(
       final Optional<String> query,
@@ -29,16 +29,16 @@ public class TwitterDataQuery implements Query {
       final double radius,
       final String resultType,
       final int count,
-      final Optional<Long> min,
-      final Optional<Long> max) {
+      final Optional<Long> first,
+      final Optional<Long> last) {
     this.query = query;
     this.latitude = latitude;
     this.longitude = longitude;
     this.radius = radius;
     this.resultType = resultType;
     this.count = count;
-    this.min = min;
-    this.max = max;
+    this.first = first;
+    this.last = last;
   }
 
   public Optional<String> query() {
@@ -66,11 +66,11 @@ public class TwitterDataQuery implements Query {
   }
 
   public Optional<Long> min() {
-    return min;
+    return first;
   }
 
   public Optional<Long> max() {
-    return max;
+    return last;
   }
 
   public static TwitterDataQuery newOne(final ByLocation byLocation) {

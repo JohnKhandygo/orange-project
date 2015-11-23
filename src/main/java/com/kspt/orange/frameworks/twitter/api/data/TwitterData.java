@@ -14,7 +14,7 @@ import com.kspt.orange.core.entities.Data;
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwitterData implements Data {
-  private final String id;
+  private final long id;
 
   private final String createdAt;
 
@@ -32,7 +32,7 @@ public class TwitterData implements Data {
 
   @JsonCreator
   public TwitterData(
-      final @JsonProperty("id_str") String id,
+      final @JsonProperty("id") long id,
       final @JsonProperty("created_at") String createdAt,
       final @JsonProperty("text") String text,
       final @JsonProperty("user") User user,
@@ -50,7 +50,7 @@ public class TwitterData implements Data {
     this.lang = lang;
   }
 
-  public String id() {
+  public long id() {
     return id;
   }
 

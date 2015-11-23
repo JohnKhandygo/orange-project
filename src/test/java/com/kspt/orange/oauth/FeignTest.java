@@ -1,7 +1,7 @@
 package com.kspt.orange.oauth;
 
 import com.google.common.collect.Lists;
-import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
+import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.User;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterUsersApi;
@@ -24,7 +24,7 @@ public class FeignTest {
         TwitterUsersApi.class,
         new AuthenticationCredentials(applicationToken, userToken));
     final ArrayList<String> names = Lists.<String>newArrayList("twitterapi", "twitter");
-    final String initial = names.isEmpty() ? "" : names.get(0).toString();
+    final String initial = names.isEmpty() ? "" : names.get(0);
     final String namesAsString = names.stream().skip(1)
         .reduce(initial, (a, e) -> a + "," + e, (s1, s2) -> s1 + "," + s2);
     final List<User> data = api.search(

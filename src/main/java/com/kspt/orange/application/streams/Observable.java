@@ -1,4 +1,4 @@
-package com.kspt.orange.core.streams;
+package com.kspt.orange.application.streams;
 
 import java.util.Collection;
 

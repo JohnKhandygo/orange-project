@@ -1,4 +1,4 @@
-package com.kspt.orange.frameworks.sources.oauth;
+package com.kspt.orange.frameworks;
 
 import org.scribe.model.Token;
 

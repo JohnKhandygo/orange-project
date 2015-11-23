@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.twitter.api;
 
-import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
+import com.kspt.orange.frameworks.AuthenticationCredentials;
 import feign.Feign;
 import feign.Feign.Builder;
 import feign.RequestInterceptor;

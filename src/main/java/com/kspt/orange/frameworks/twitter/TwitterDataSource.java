@@ -1,14 +1,16 @@
 package com.kspt.orange.frameworks.twitter;
 
-import com.kspt.orange.application.Source;
-import com.kspt.orange.frameworks.sources.oauth.AuthenticationCredentials;
+import com.kspt.orange.application.BoundedQuery;
+import com.kspt.orange.core.ports.Source;
+import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.twitter.api.TwitterApiBuilder;
 import com.kspt.orange.frameworks.twitter.api.data.TwitterData;
 import com.kspt.orange.frameworks.twitter.api.endpoints.TwitterDataApi;
 import static java.lang.String.format;
 import java.util.Collection;
 
-public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> {
+public class TwitterDataSource
+    implements Source<BoundedQuery<TwitterDataQuery>, TwitterData> {
 
   private final TwitterDataApi api;
 
@@ -17,13 +19,7 @@ public class TwitterDataSource implements Source<TwitterDataQuery, TwitterData> 
   }
 
   @Override
-  public Collection<TwitterData> get(final TwitterDataQuery query) {
-    /*final String geo = formatGeo(query);
-    return query.query().map(q ->
-        api.search(q, geo, query.resultType(), query.count(), query.min().get(), query.max().get())
-    ).orElse(
-        api.search(geo, query.resultType(), query.count(), query.min().get(), query.max().get())
-    ).statuses();*/
+  public Collection<TwitterData> get(final BoundedQuery<TwitterDataQuery> query) {
     return null;
   }
 

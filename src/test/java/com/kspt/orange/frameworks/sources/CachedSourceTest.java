@@ -73,7 +73,7 @@ public class CachedSourceTest {
   }
 
   private Predicate<Data> theOnly(final Data data) {
-    return d -> d.id().equals(data.id());
+    return d -> d.id() == data.id();
   }
 
   private Data generateData(final int i) {

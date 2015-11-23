@@ -1,4 +1,4 @@
-package com.kspt.orange.core.streams;
+package com.kspt.orange.application.streams;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;

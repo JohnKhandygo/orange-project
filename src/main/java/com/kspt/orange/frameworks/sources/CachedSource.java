@@ -1,9 +1,9 @@
 package com.kspt.orange.frameworks.sources;
 
 import static com.google.common.collect.Lists.newArrayList;
-import com.kspt.orange.application.Source;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
+import com.kspt.orange.core.ports.Source;
 import static java.util.stream.Collectors.toList;
 import java.util.Collection;
 import java.util.List;

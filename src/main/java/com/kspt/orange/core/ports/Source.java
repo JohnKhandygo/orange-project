@@ -1,4 +1,4 @@
-package com.kspt.orange.application;
+package com.kspt.orange.core.ports;
 
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;

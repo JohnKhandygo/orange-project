@@ -18,17 +18,17 @@ public interface TwitterDataApi {
   TwitterDataObject search(
       final @QueryParam("q") String query,
       final @QueryParam("geocode") String geocode,
-      final @QueryParam("result_type") String resultType,
       final @QueryParam("count") int count,
       final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max);
+      final @QueryParam("max_id") long max,
+      final @QueryParam("result_type") String resultType);
 
   @GET
   TwitterDataObject search(
       final @QueryParam("geocode") String geocode,
-      final @QueryParam("result_type") String resultType,
       final @QueryParam("count") int count,
       final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max);
+      final @QueryParam("max_id") long max,
+      final @QueryParam("result_type") String resultType);
 }
 

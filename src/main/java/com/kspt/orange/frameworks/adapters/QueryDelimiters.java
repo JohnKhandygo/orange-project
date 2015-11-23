@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class QueryDelimiters {
 
-  public static <Q extends Query> QueryDelimiter<Q>
+  public static <Q extends Query> QueryDelimiter<Q, BoundedQuery<Q>>
   newIteratingQueryDelimiter(final int granularity) {
     return (q, d) -> {
       final Optional<Long> last = d.stream().map(Data::id).min(comparingLong(l -> l));
@@ -17,7 +17,7 @@ public class QueryDelimiters {
     };
   }
 
-  public static <Q extends Query> QueryDelimiter<Q>
+  public static <Q extends Query> QueryDelimiter<Q, BoundedQuery<Q>>
   newUpdatingQueryDelimiter(final int granularity) {
     return (q, d) -> {
       final Optional<Long> first = d.stream().map(Data::id).max(comparingLong(l -> l));

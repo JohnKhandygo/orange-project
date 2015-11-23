@@ -1,7 +1,7 @@
 package com.kspt.orange.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kspt.orange.frameworks.twitter.api.data.TwitterDataObject;
+import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
 import org.junit.Test;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;

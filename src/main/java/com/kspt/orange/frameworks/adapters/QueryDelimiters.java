@@ -4,10 +4,10 @@ import com.kspt.orange.application.BoundedQuery;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
-import com.kspt.orange.frameworks.twitter.api.data.TwitterDataObject;
-import com.kspt.orange.frameworks.twitter.api.data.TwitterUsersObject;
-import com.kspt.orange.frameworks.twitter.api.queries.TwitterDataQuery;
-import com.kspt.orange.frameworks.twitter.api.queries.TwitterFriendsQuery;
+import com.kspt.orange.frameworks.api.twitter.endpoints.data.TwitterDataQuery;
+import com.kspt.orange.frameworks.api.twitter.endpoints.friends.TwitterFriendsQuery;
+import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
+import com.kspt.orange.frameworks.api.twitter.entities.TwitterUsersObject;
 import static java.util.Comparator.comparingLong;
 import java.util.Optional;
 

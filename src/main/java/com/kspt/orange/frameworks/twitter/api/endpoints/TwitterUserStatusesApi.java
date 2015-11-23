@@ -13,16 +13,16 @@ import java.util.List;
 public interface TwitterUserStatusesApi {
 
   @GET
-  List<TwitterData> searchById(
+  List<TwitterData> search(
       final @QueryParam("user_id") long userId,
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max,
+      final @QueryParam("since_id") long last,
+      final @QueryParam("max_id") long first,
       final @QueryParam("exclude_replies") boolean excludeReplies,
       final @QueryParam("contributor_details") boolean contributorDetails,
       final @QueryParam("include_rts") boolean includeRts);
 
-  @GET
+  /*@GET
   List<TwitterData> searchByScreenName(
       final @QueryParam("screen_name") String screenName,
       final @QueryParam("count") int count,
@@ -30,5 +30,5 @@ public interface TwitterUserStatusesApi {
       final @QueryParam("max_id") long max,
       final @QueryParam("exclude_replies") boolean excludeReplies,
       final @QueryParam("contributor_details") boolean contributorDetails,
-      final @QueryParam("include_rts") boolean includeRts);
+      final @QueryParam("include_rts") boolean includeRts);*/
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kspt.orange.core.entities.Data;
 
 @JsonAutoDetect(
     fieldVisibility = JsonAutoDetect.Visibility.ANY,
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     setterVisibility = JsonAutoDetect.Visibility.NONE,
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class User implements Data {
   private final long id;
 
   private final String name;
@@ -27,5 +28,17 @@ public class User {
     this.id = id;
     this.name = name;
     this.screenName = screenName;
+  }
+
+  public long id() {
+    return id;
+  }
+
+  public String name() {
+    return name;
+  }
+
+  public String screenName() {
+    return screenName;
   }
 }

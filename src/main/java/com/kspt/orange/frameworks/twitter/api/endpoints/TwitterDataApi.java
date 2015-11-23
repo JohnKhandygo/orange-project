@@ -12,23 +12,12 @@ import javax.ws.rs.core.MediaType;
 public interface TwitterDataApi {
 
   @GET
-  TwitterDataObject search(final @QueryParam("q") String query);
-
-  @GET
   TwitterDataObject search(
       final @QueryParam("q") String query,
       final @QueryParam("geocode") String geocode,
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max,
-      final @QueryParam("result_type") String resultType);
-
-  @GET
-  TwitterDataObject search(
-      final @QueryParam("geocode") String geocode,
-      final @QueryParam("count") int count,
-      final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max,
+      final @QueryParam("since_id") long last,
+      final @QueryParam("max_id") long first,
       final @QueryParam("result_type") String resultType);
 }
 

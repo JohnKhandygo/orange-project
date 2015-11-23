@@ -2,61 +2,49 @@ package com.kspt.orange.application.adapters;
 
 import com.kspt.orange.application.BoundedQuery;
 import com.kspt.orange.application.LimitedQuery;
-import com.kspt.orange.application.ports.CompletionStrategy;
-import com.kspt.orange.application.ports.QueryingStrategy;
+import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.application.streams.Observable;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
 import com.kspt.orange.core.ports.Source;
+import static java.util.Collections.emptyList;
 import java.util.Collection;
 
-public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
+public class Gateway<Q extends Query, D extends Data> {
 
-  private final QueryingStrategy<Q1, BoundedQuery<Q1>> querying;
+  private final QueryDelimiter<Q> delimiter;
 
-  private final CompletionStrategy<Q1, Q2> completion;
-
-  private final Source<Q2, D> source;
+  private final Source<BoundedQuery<Q>, D> source;
 
   private final Observable<D> output;
 
-  public Gateway(
-      final QueryingStrategy<Q1, BoundedQuery<Q1>> querying,
-      final CompletionStrategy<Q1, Q2> completion,
-      final Source<Q2, D> source,
+  Gateway(
+      final QueryDelimiter<Q> delimiter,
+      final Source<BoundedQuery<Q>, D> source,
       final Observable<D> output) {
-    this.querying = querying;
-    this.completion = completion;
+    this.delimiter = delimiter;
     this.source = source;
     this.output = output;
   }
 
-  public void forward(final LimitedQuery<Q1> limitedQuery) {
-    final Collection<D> firstPortion = extractAndEmit(limitedQuery.query());
+  public void forward(final LimitedQuery<Q> limitedQuery) {
+    final BoundedQuery<Q> firstQuery = delimiter.next(limitedQuery.query(), emptyList());
+    final Collection<D> firstPortion = extractAndEmit(firstQuery);
     int remaining = firstPortion.size() == 0 ? 0 : limitedQuery.limit() - firstPortion.size();
     while (remaining != 0) {
-      final BoundedQuery<Q1> next = querying.next(limitedQuery.query(), firstPortion);
-      final Collection<D> nextPortion = extractAndEmit(limitedQuery.query());
+      final BoundedQuery<Q> next = delimiter.next(limitedQuery.query(), firstPortion);
+      final Collection<D> nextPortion = extractAndEmit(next);
       remaining = nextPortion.size() == 0 ? 0 : remaining - nextPortion.size();
     }
   }
 
-  private Collection<D> extractAndEmit(final Q1 query) {
-    Q2 completed = completion.complete(query);
-    Collection<D> retrieved = source.get(completed);
+  private Collection<D> extractAndEmit(final BoundedQuery<Q> query) {
+    Collection<D> retrieved = source.get(query);
     retrieved.stream().forEach(output::emit);
     return retrieved;
   }
 
   public Observable<D> output() {
     return output;
-  }
-
-  public static <Q1 extends Query, Q2 extends Query, D extends Data> Gateway<Q1, Q2, D>
-  newOne(
-      final CompletionStrategy<Q1, Q2> completion,
-      final QueryingStrategy<Q1, BoundedQuery<Q1>> querying,
-      final Source<Q2, D> source) {
-    return new Gateway<>(querying, completion, source, Observable.newOne());
   }
 }

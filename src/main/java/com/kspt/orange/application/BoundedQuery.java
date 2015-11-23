@@ -1,19 +1,22 @@
 package com.kspt.orange.application;
 
 import com.kspt.orange.core.entities.Query;
-import java.util.OptionalLong;
+import java.util.Optional;
 
 public class BoundedQuery<Q extends Query> implements Query {
 
   private final Q query;
 
-  private final OptionalLong first;
+  private final Optional<Long> first;
 
-  private final OptionalLong last;
+  private final Optional<Long> last;
 
   private final int count;
 
-  public BoundedQuery(final Q query, final OptionalLong first, final OptionalLong last,
+  public BoundedQuery(
+      final Q query,
+      final Optional<Long> first,
+      final Optional<Long> last,
       final int count) {
     this.query = query;
     this.first = first;
@@ -25,15 +28,19 @@ public class BoundedQuery<Q extends Query> implements Query {
     return query;
   }
 
-  public OptionalLong first() {
+  public Optional<Long> first() {
     return first;
   }
 
-  public OptionalLong last() {
+  public Optional<Long> last() {
     return last;
   }
 
   public int count() {
     return count;
+  }
+
+  public static <Q extends Query> BoundedQuery<Q> newOne(final Q query, final int count) {
+    return new BoundedQuery<>(query, Optional.empty(), Optional.empty(), count);
   }
 }

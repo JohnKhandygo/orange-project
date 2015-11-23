@@ -15,8 +15,8 @@ public interface TwitterHomeStatusesApi {
   @GET
   List<TwitterData> search(
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") long min,
-      final @QueryParam("max_id") long max,
+      final @QueryParam("since_id") long last,
+      final @QueryParam("max_id") long first,
       final @QueryParam("trim_user") boolean trimUser,
       final @QueryParam("exclude_replies") boolean excludeReplies,
       final @QueryParam("contributor_details") boolean contributorDetails,

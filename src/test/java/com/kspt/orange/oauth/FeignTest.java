@@ -9,7 +9,6 @@ import static java.lang.String.format;
 import org.junit.Test;
 import org.scribe.model.Token;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class FeignTest {
@@ -39,9 +38,9 @@ public class FeignTest {
     final String initial = names.isEmpty() ? "" : names.get(0);
     final String namesAsString = names.stream().skip(1)
         .reduce(initial, (a, e) -> a + "," + e, (s1, s2) -> s1 + "," + s2);
-    final List<User> data = api.search(
-        "",
-        namesAsString,
+    final User data = api.search(
+        1,
+        //namesAsString,
         false);
 
     final int a = 1;

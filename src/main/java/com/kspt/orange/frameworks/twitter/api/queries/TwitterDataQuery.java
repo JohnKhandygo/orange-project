@@ -9,17 +9,29 @@ import java.util.Optional;
 public class TwitterDataQuery implements Query {
   private final Optional<String> query;
 
-  private final String location;
+  private final String geo;
 
   private final String result;
 
   private TwitterDataQuery(
       final Optional<String> query,
-      final String location,
+      final String geo,
       final String result) {
     this.query = query;
-    this.location = location;
+    this.geo = geo;
     this.result = result;
+  }
+
+  public Optional<String> query() {
+    return query;
+  }
+
+  public String geo() {
+    return geo;
+  }
+
+  public String result() {
+    return result;
   }
 
   public static TwitterDataQuery newOne(

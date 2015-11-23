@@ -12,18 +12,18 @@ import javax.ws.rs.core.MediaType;
 public interface TwitterFriendsApi {
 
   @GET
-  TwitterUsersObject searchById(
-      final @QueryParam("user_id") long userId,
-      final @QueryParam("cursor") long cursor,
+  TwitterUsersObject search(
+      final @QueryParam("user_id") long id,
       final @QueryParam("count") int count,
+      final @QueryParam("cursor") long cursor,
       final @QueryParam("skip_status") boolean skipStatus,
       final @QueryParam("include_user_entities") boolean includeUserEntities);
 
-  @GET
+  /*@GET
   TwitterUsersObject searchByScreenName(
       final @QueryParam("screen_name") String screenName,
       final @QueryParam("cursor") long cursor,
       final @QueryParam("count") int count,
       final @QueryParam("skip_status") boolean skipStatus,
-      final @QueryParam("include_user_entities") boolean includeUserEntities);
+      final @QueryParam("include_user_entities") boolean includeUserEntities);*/
 }

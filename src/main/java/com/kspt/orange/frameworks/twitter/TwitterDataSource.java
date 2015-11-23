@@ -19,8 +19,15 @@ public class TwitterDataSource
   }
 
   @Override
-  public Collection<TwitterData> get(final BoundedQuery<TwitterDataQuery> query) {
-    return null;
+  public Collection<TwitterData> get(final BoundedQuery<TwitterDataQuery> boundedQuery) {
+    final TwitterDataQuery query = boundedQuery.query();
+    return api.search(
+        query.query().orElse(null),
+        query.geo(),
+        boundedQuery.count(),
+        boundedQuery.last().orElse(null),
+        boundedQuery.first().orElse(null),
+        query.result()).dataCollection();
   }
 
   public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {

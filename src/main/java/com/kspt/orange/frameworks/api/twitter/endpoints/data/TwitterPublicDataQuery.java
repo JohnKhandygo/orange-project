@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public class TwitterDataQuery implements Query {
+public class TwitterPublicDataQuery implements Query {
   private final Optional<String> query;
 
   private final String geo;
@@ -15,7 +15,7 @@ public class TwitterDataQuery implements Query {
 
   private final String result;
 
-  private TwitterDataQuery(
+  private TwitterPublicDataQuery(
       final Optional<String> query,
       final String geo,
       final String lang,
@@ -42,7 +42,7 @@ public class TwitterDataQuery implements Query {
     return result;
   }
 
-  public static TwitterDataQuery newOne(
+  public static TwitterPublicDataQuery newOne(
       final String query,
       final double latitude,
       final double longitude,
@@ -51,7 +51,7 @@ public class TwitterDataQuery implements Query {
       final String result) {
     Objects.requireNonNull(query, "Query string cannot be null!");
     final String formattedLocation = formatLocation(latitude, longitude, radius);
-    return new TwitterDataQuery(Optional.of(query), formattedLocation, lang, result);
+    return new TwitterPublicDataQuery(Optional.of(query), formattedLocation, lang, result);
   }
 
   static String formatLocation(
@@ -61,13 +61,13 @@ public class TwitterDataQuery implements Query {
     return format(Locale.ENGLISH, "%.2f,%.2f,%.2fkm", latitude, longitude, radius);
   }
 
-  public static TwitterDataQuery newOne(
+  public static TwitterPublicDataQuery newOne(
       final double latitude,
       final double longitude,
       final double radius,
       final String lang,
       final String result) {
     final String formattedLocation = formatLocation(latitude, longitude, radius);
-    return new TwitterDataQuery(Optional.empty(), formattedLocation, lang, result);
+    return new TwitterPublicDataQuery(Optional.empty(), formattedLocation, lang, result);
   }
 }

@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("1.1/search/tweets.json")
 @Produces(MediaType.APPLICATION_JSON)
-public interface TwitterDataApi {
+public interface TwitterPublicDataApi {
 
   @GET
   TwitterDataObject search(

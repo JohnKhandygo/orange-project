@@ -7,18 +7,18 @@ import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;
 import com.kspt.orange.frameworks.api.twitter.entities.TwitterData;
 import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
 
-public class TwitterDataSource
-    implements Source<QueryWithBounds<TwitterDataQuery>, TwitterData> {
+public class TwitterPublicDataSource
+    implements Source<QueryWithBounds<TwitterPublicDataQuery>, TwitterData> {
 
-  private final TwitterDataApi api;
+  private final TwitterPublicDataApi api;
 
-  private TwitterDataSource(final TwitterDataApi api) {
+  private TwitterPublicDataSource(final TwitterPublicDataApi api) {
     this.api = api;
   }
 
   @Override
-  public TwitterDataObject get(final QueryWithBounds<TwitterDataQuery> boundedQuery) {
-    final TwitterDataQuery query = boundedQuery.query();
+  public TwitterDataObject get(final QueryWithBounds<TwitterPublicDataQuery> boundedQuery) {
+    final TwitterPublicDataQuery query = boundedQuery.query();
     return api.search(
         query.query().orElse(null),
         query.geo(),
@@ -29,9 +29,9 @@ public class TwitterDataSource
         query.result());
   }
 
-  public static TwitterDataSource newOne(final AuthenticationCredentials credentials) {
-    TwitterDataApi api = TwitterApiBuilder.build(TwitterDataApi.class, credentials);
-    return new TwitterDataSource(api);
+  public static TwitterPublicDataSource newOne(final AuthenticationCredentials credentials) {
+    TwitterPublicDataApi api = TwitterApiBuilder.build(TwitterPublicDataApi.class, credentials);
+    return new TwitterPublicDataSource(api);
   }
 }
 

@@ -33,7 +33,7 @@ public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
     final Collection<D> firstPortionData = firstPortion.data();
     int remaining =
         firstPortionData.size() == 0 ? 0 : queryWithLimit.limit() - firstPortionData.size();
-    while (remaining != 0) {
+    while (remaining > 0) {
       final Q2 next = delimiter.next(queryWithLimit.query(), firstPortion);
       final DataCollection<D> nextPortion = extractAndEmit(next);
       remaining = nextPortion.data().size() == 0 ? 0 : remaining - nextPortion.data().size();

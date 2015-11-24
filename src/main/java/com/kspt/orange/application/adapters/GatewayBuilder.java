@@ -27,7 +27,7 @@ public class GatewayBuilder<Q1 extends Query, Q2 extends Query, D extends Data> 
     return GatewayBuilder.newOne(queryDelimiter, source);
   }
 
-  public static <Q1 extends Query, Q2 extends Query, D extends Data> Gateway<Q1, Q2, D> newOne(
+  private static <Q1 extends Query, Q2 extends Query, D extends Data> Gateway<Q1, Q2, D> newOne(
       final QueryDelimiter<Q1, Q2> queryDelimiter,
       final Source<Q2, D> source) {
     requireNonNull(queryDelimiter, "Query delimiter cannot be null!");

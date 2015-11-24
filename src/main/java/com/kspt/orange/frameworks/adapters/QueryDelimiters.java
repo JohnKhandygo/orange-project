@@ -41,8 +41,13 @@ public class QueryDelimiters {
   public static <Q extends Query> QueryDelimiter<Q, QueryWithCursor<Q>>
   newCursorSourceDelimiter(final int granularity) {
     return (q, dc) -> {
-      final DataCollectionWithCursor dcwc = (DataCollectionWithCursor) dc;
-      return new QueryWithCursor<>(q, granularity, dcwc.cursor());
+      if (dc instanceof DataCollectionWithCursor) {
+        return new QueryWithCursor<>(q, granularity, ((DataCollectionWithCursor) dc).cursor());
+      } else if (dc.data().isEmpty()) {
+        return new QueryWithCursor<>(q, granularity, -1);
+      } else {
+        throw new RuntimeException();
+      }
     };
   }
 

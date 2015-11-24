@@ -1,13 +1,13 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.friends;
 
-import com.kspt.orange.application.QueryWithBounds;
+import com.kspt.orange.application.QueryWithCursor;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;
 import com.kspt.orange.frameworks.api.twitter.entities.TwitterUsersObject;
 import com.kspt.orange.frameworks.api.twitter.entities.User;
 
-public class TwitterFriendsSource implements Source<QueryWithBounds<TwitterFriendsQuery>, User> {
+public class TwitterFriendsSource implements Source<QueryWithCursor<TwitterFriendsQuery>, User> {
 
   private final TwitterFriendsApi api;
 
@@ -16,12 +16,12 @@ public class TwitterFriendsSource implements Source<QueryWithBounds<TwitterFrien
   }
 
   @Override
-  public TwitterUsersObject get(final QueryWithBounds<TwitterFriendsQuery> boundedQuery) {
+  public TwitterUsersObject get(final QueryWithCursor<TwitterFriendsQuery> boundedQuery) {
     final TwitterFriendsQuery query = boundedQuery.query();
     return api.search(
         query.id(),
-        boundedQuery.count(),
-        boundedQuery.last().orElse(-1L),
+        boundedQuery.limit(),
+        boundedQuery.cursor(),
         query.skipStatus(),
         query.includeUserEntities());
   }

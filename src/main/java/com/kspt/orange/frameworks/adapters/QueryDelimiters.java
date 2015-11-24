@@ -1,6 +1,7 @@
 package com.kspt.orange.frameworks.adapters;
 
 import com.kspt.orange.application.QueryWithBounds;
+import com.kspt.orange.application.QueryWithCursor;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
@@ -47,12 +48,11 @@ public class QueryDelimiters {
     };
   }
 
-  public static QueryDelimiter<TwitterFriendsQuery, QueryWithBounds<TwitterFriendsQuery>>
+  public static QueryDelimiter<TwitterFriendsQuery, QueryWithCursor<TwitterFriendsQuery>>
   newTwitterFriendsSourceDelimiter(final int granularity) {
     return (q, dc) -> {
       final TwitterUsersObject tuo = (TwitterUsersObject) dc;
-      final Optional<Long> last = Optional.of(tuo.nextCursor());
-      return new QueryWithBounds<>(q, Optional.empty(), last, granularity);
+      return new QueryWithCursor<>(q, granularity, tuo.nextCursor());
     };
   }
 

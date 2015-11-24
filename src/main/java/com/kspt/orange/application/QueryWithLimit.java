@@ -2,7 +2,7 @@ package com.kspt.orange.application;
 
 import com.kspt.orange.core.entities.Query;
 
-public class QueryWithLimit<Q extends Query> {
+public class QueryWithLimit<Q extends Query> implements Query {
 
   private final Q query;
 

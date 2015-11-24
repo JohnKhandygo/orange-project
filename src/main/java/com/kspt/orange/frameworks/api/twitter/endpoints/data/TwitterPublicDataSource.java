@@ -24,7 +24,7 @@ public class TwitterPublicDataSource
         query.geo(),
         boundedQuery.count(),
         boundedQuery.last().orElse(null),
-        boundedQuery.first().orElse(null),
+        boundedQuery.first().map(l -> l - 1).orElse(null),
         query.lang(),
         query.result());
   }

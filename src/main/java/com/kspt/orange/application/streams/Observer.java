@@ -6,12 +6,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 
-interface Handler<T1, T2> {
-  void onError(final Exception exception);
-
-  T2 observe(final T1 element);
-}
-
 public class Observer<T1, T2> {
 
   final BlockingQueue<T1> input;

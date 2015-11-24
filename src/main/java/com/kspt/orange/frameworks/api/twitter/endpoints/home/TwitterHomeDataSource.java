@@ -6,7 +6,6 @@ import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;
 import com.kspt.orange.frameworks.api.twitter.entities.TwitterData;
-import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.toList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class TwitterHomeDataSource
     final List<TwitterData> found = api.search(
         boundedQuery.count(),
         boundedQuery.last().orElse(null),
-        boundedQuery.first().orElse(null),
+        boundedQuery.first().map(l -> l - 1).orElse(null),
         query.trimUser(),
         query.excludeReplies(),
         query.contributorsDetails(),
@@ -34,7 +33,8 @@ public class TwitterHomeDataSource
   }
 
   private DataCollection<TwitterData> formDataCollection(final List<TwitterData> data) {
-    final List<TwitterData> geotaggedData = data.stream().filter(d -> nonNull(d.geo()))
+    final List<TwitterData> geotaggedData = data.stream()
+        //.filter(d -> nonNull(d.geo()))
         .collect(toList());
     return () -> geotaggedData;
   }

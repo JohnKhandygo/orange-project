@@ -1,6 +1,6 @@
 package com.kspt.orange.application.adapters;
 
-import com.kspt.orange.application.LimitedQuery;
+import com.kspt.orange.application.QueryWithLimit;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.application.streams.Observable;
 import com.kspt.orange.core.entities.Data;
@@ -27,14 +27,14 @@ public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
     this.output = output;
   }
 
-  public void forward(final LimitedQuery<Q1> limitedQuery) {
-    final Q2 firstQuery = delimiter.next(limitedQuery.query(), new DataCollection<>(emptyList()));
+  public void forward(final QueryWithLimit<Q1> queryWithLimit) {
+    final Q2 firstQuery = delimiter.next(queryWithLimit.query(), new DataCollection<>(emptyList()));
     final DataCollection<D> firstPortion = extractAndEmit(firstQuery);
     final Collection<D> firstPortionData = firstPortion.data();
     int remaining =
-        firstPortionData.size() == 0 ? 0 : limitedQuery.limit() - firstPortionData.size();
+        firstPortionData.size() == 0 ? 0 : queryWithLimit.limit() - firstPortionData.size();
     while (remaining != 0) {
-      final Q2 next = delimiter.next(limitedQuery.query(), firstPortion);
+      final Q2 next = delimiter.next(queryWithLimit.query(), firstPortion);
       final DataCollection<D> nextPortion = extractAndEmit(next);
       remaining = nextPortion.data().size() == 0 ? 0 : remaining - nextPortion.data().size();
     }

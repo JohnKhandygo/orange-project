@@ -3,7 +3,7 @@ package com.kspt.orange.application;
 import com.kspt.orange.core.entities.Query;
 import java.util.Optional;
 
-public class BoundedQuery<Q extends Query> implements Query {
+public class QueryWithBounds<Q extends Query> implements Query {
 
   private final Q query;
 
@@ -13,7 +13,7 @@ public class BoundedQuery<Q extends Query> implements Query {
 
   private final int count;
 
-  public BoundedQuery(
+  public QueryWithBounds(
       final Q query,
       final Optional<Long> first,
       final Optional<Long> last,
@@ -40,7 +40,7 @@ public class BoundedQuery<Q extends Query> implements Query {
     return count;
   }
 
-  public static <Q extends Query> BoundedQuery<Q> newOne(final Q query, final int count) {
-    return new BoundedQuery<>(query, Optional.empty(), Optional.empty(), count);
+  public static <Q extends Query> QueryWithBounds<Q> newOne(final Q query, final int count) {
+    return new QueryWithBounds<>(query, Optional.empty(), Optional.empty(), count);
   }
 }

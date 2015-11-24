@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.data;
 
-import com.kspt.orange.application.BoundedQuery;
+import com.kspt.orange.application.QueryWithBounds;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;
@@ -8,7 +8,7 @@ import com.kspt.orange.frameworks.api.twitter.entities.TwitterData;
 import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
 
 public class TwitterDataSource
-    implements Source<BoundedQuery<TwitterDataQuery>, TwitterData> {
+    implements Source<QueryWithBounds<TwitterDataQuery>, TwitterData> {
 
   private final TwitterDataApi api;
 
@@ -17,7 +17,7 @@ public class TwitterDataSource
   }
 
   @Override
-  public TwitterDataObject get(final BoundedQuery<TwitterDataQuery> boundedQuery) {
+  public TwitterDataObject get(final QueryWithBounds<TwitterDataQuery> boundedQuery) {
     final TwitterDataQuery query = boundedQuery.query();
     return api.search(
         query.query().orElse(null),

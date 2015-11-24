@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.home;
 
-import com.kspt.orange.application.BoundedQuery;
+import com.kspt.orange.application.QueryWithBounds;
 import com.kspt.orange.core.entities.DataCollection;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
@@ -11,7 +11,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.List;
 
 public class TwitterHomeDataSource
-    implements Source<BoundedQuery<TwitterHomeDataQuery>, TwitterData> {
+    implements Source<QueryWithBounds<TwitterHomeDataQuery>, TwitterData> {
 
   private final TwitterHomeDataApi api;
 
@@ -20,7 +20,7 @@ public class TwitterHomeDataSource
   }
 
   @Override
-  public DataCollection<TwitterData> get(final BoundedQuery<TwitterHomeDataQuery> boundedQuery) {
+  public DataCollection<TwitterData> get(final QueryWithBounds<TwitterHomeDataQuery> boundedQuery) {
     final TwitterHomeDataQuery query = boundedQuery.query();
     final List<TwitterData> found = api.search(
         boundedQuery.count(),

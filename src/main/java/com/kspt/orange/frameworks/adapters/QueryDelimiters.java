@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.adapters;
 
-import com.kspt.orange.application.BoundedQuery;
+import com.kspt.orange.application.QueryWithBounds;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;
@@ -13,46 +13,46 @@ import java.util.Optional;
 
 public class QueryDelimiters {
 
-  public static <Q extends Query> QueryDelimiter<Q, BoundedQuery<Q>>
+  public static <Q extends Query> QueryDelimiter<Q, QueryWithBounds<Q>>
   newDownQueryDelimiter(final int granularity) {
     return (q, dc) -> {
       final Optional<Long> last = dc.data().stream().map(Data::id).min(comparingLong(l -> l));
-      return new BoundedQuery<>(q, Optional.empty(), last, granularity);
+      return new QueryWithBounds<>(q, Optional.empty(), last, granularity);
     };
   }
 
-  public static <Q extends Query> QueryDelimiter<Q, BoundedQuery<Q>>
+  public static <Q extends Query> QueryDelimiter<Q, QueryWithBounds<Q>>
   newUpQueryDelimiter(final int granularity) {
     return (q, dc) -> {
       final Optional<Long> first = dc.data().stream().map(Data::id).max(comparingLong(l -> l));
-      return new BoundedQuery<>(q, first, Optional.empty(), granularity);
+      return new QueryWithBounds<>(q, first, Optional.empty(), granularity);
     };
   }
 
-  public static QueryDelimiter<TwitterDataQuery, BoundedQuery<TwitterDataQuery>>
+  public static QueryDelimiter<TwitterDataQuery, QueryWithBounds<TwitterDataQuery>>
   newDownTwitterDataSourceDelimiter(final int granularity) {
     return (q, dc) -> {
       final TwitterDataObject tdo = (TwitterDataObject) dc;
       final Optional<Long> last = Optional.of(tdo.meta().first());
-      return new BoundedQuery<>(q, Optional.empty(), last, granularity);
+      return new QueryWithBounds<>(q, Optional.empty(), last, granularity);
     };
   }
 
-  public static QueryDelimiter<TwitterDataQuery, BoundedQuery<TwitterDataQuery>>
+  public static QueryDelimiter<TwitterDataQuery, QueryWithBounds<TwitterDataQuery>>
   newUpTwitterDataSourceDelimiter(final int granularity) {
     return (q, dc) -> {
       final TwitterDataObject tdo = (TwitterDataObject) dc;
       final Optional<Long> first = Optional.of(tdo.meta().last());
-      return new BoundedQuery<>(q, first, Optional.empty(), granularity);
+      return new QueryWithBounds<>(q, first, Optional.empty(), granularity);
     };
   }
 
-  public static QueryDelimiter<TwitterFriendsQuery, BoundedQuery<TwitterFriendsQuery>>
+  public static QueryDelimiter<TwitterFriendsQuery, QueryWithBounds<TwitterFriendsQuery>>
   newTwitterFriendsSourceDelimiter(final int granularity) {
     return (q, dc) -> {
       final TwitterUsersObject tuo = (TwitterUsersObject) dc;
       final Optional<Long> last = Optional.of(tuo.nextCursor());
-      return new BoundedQuery<>(q, Optional.empty(), last, granularity);
+      return new QueryWithBounds<>(q, Optional.empty(), last, granularity);
     };
   }
 

@@ -11,14 +11,18 @@ public class TwitterDataQuery implements Query {
 
   private final String geo;
 
+  private final String lang;
+
   private final String result;
 
   private TwitterDataQuery(
       final Optional<String> query,
       final String geo,
+      final String lang,
       final String result) {
     this.query = query;
     this.geo = geo;
+    this.lang = lang;
     this.result = result;
   }
 
@@ -30,6 +34,10 @@ public class TwitterDataQuery implements Query {
     return geo;
   }
 
+  public String lang() {
+    return lang;
+  }
+
   public String result() {
     return result;
   }
@@ -39,10 +47,11 @@ public class TwitterDataQuery implements Query {
       final double latitude,
       final double longitude,
       final double radius,
+      final String lang,
       final String result) {
     Objects.requireNonNull(query, "Query string cannot be null!");
     final String formattedLocation = formatLocation(latitude, longitude, radius);
-    return new TwitterDataQuery(Optional.of(query), formattedLocation, result);
+    return new TwitterDataQuery(Optional.of(query), formattedLocation, lang, result);
   }
 
   static String formatLocation(
@@ -56,8 +65,9 @@ public class TwitterDataQuery implements Query {
       final double latitude,
       final double longitude,
       final double radius,
+      final String lang,
       final String result) {
     final String formattedLocation = formatLocation(latitude, longitude, radius);
-    return new TwitterDataQuery(Optional.empty(), formattedLocation, result);
+    return new TwitterDataQuery(Optional.empty(), formattedLocation, lang, result);
   }
 }

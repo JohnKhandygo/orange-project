@@ -18,6 +18,7 @@ public interface TwitterDataApi {
       final @QueryParam("count") int count,
       final @QueryParam("since_id") long last,
       final @QueryParam("max_id") long first,
+      final @QueryParam("lang") String lang,
       final @QueryParam("result_type") String resultType);
 }
 

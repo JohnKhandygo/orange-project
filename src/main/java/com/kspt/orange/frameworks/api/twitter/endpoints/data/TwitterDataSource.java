@@ -25,6 +25,7 @@ public class TwitterDataSource
         boundedQuery.count(),
         boundedQuery.last().orElse(null),
         boundedQuery.first().orElse(null),
+        query.lang(),
         query.result());
   }
 

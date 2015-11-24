@@ -1,9 +1,9 @@
 package com.kspt.orange.frameworks.adapters;
 
-import com.kspt.orange.application.DataCollectionWithBounds;
-import com.kspt.orange.application.DataCollectionWithCursor;
-import com.kspt.orange.application.QueryWithBounds;
-import com.kspt.orange.application.QueryWithCursor;
+import com.kspt.orange.application.entities.bounded.DataCollectionWithBounds;
+import com.kspt.orange.application.entities.bounded.QueryWithBounds;
+import com.kspt.orange.application.entities.cursored.DataCollectionWithCursor;
+import com.kspt.orange.application.entities.cursored.QueryWithCursor;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.Query;

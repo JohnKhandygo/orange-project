@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.data;
 
-import com.kspt.orange.application.QueryWithBounds;
+import com.kspt.orange.application.entities.bounded.QueryWithBounds;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;

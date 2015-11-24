@@ -1,4 +1,4 @@
-package com.kspt.orange.application;
+package com.kspt.orange.application.entities;
 
 import com.kspt.orange.core.entities.Query;
 

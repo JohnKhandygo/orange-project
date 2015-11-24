@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.friends;
 
-import com.kspt.orange.application.QueryWithCursor;
+import com.kspt.orange.application.entities.cursored.QueryWithCursor;
 import com.kspt.orange.core.ports.Source;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;

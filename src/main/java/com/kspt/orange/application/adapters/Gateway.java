@@ -1,6 +1,6 @@
 package com.kspt.orange.application.adapters;
 
-import com.kspt.orange.application.QueryWithLimit;
+import com.kspt.orange.application.entities.QueryWithLimit;
 import com.kspt.orange.application.ports.QueryDelimiter;
 import com.kspt.orange.application.streams.Observable;
 import com.kspt.orange.core.entities.Data;

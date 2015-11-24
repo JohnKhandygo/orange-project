@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kspt.orange.application.DataCollectionWithBounds;
+import com.kspt.orange.application.entities.bounded.DataCollectionWithBounds;
 import java.util.Collection;
 import java.util.List;
 

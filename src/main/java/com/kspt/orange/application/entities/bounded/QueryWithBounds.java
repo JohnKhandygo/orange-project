@@ -1,4 +1,4 @@
-package com.kspt.orange.application;
+package com.kspt.orange.application.entities.bounded;
 
 import com.kspt.orange.core.entities.Query;
 import java.util.Optional;

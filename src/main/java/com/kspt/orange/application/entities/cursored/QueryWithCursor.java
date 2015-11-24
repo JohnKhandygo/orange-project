@@ -1,5 +1,6 @@
-package com.kspt.orange.application;
+package com.kspt.orange.application.entities.cursored;
 
+import com.kspt.orange.application.entities.QueryWithLimit;
 import com.kspt.orange.core.entities.Query;
 
 public class QueryWithCursor<Q extends Query> extends QueryWithLimit<Q> {

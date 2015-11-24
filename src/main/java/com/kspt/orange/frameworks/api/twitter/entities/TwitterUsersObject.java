@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kspt.orange.core.entities.DataCollection;
+import com.kspt.orange.application.DataCollectionWithCursor;
+import java.util.Collection;
 import java.util.List;
 
 @JsonAutoDetect(
@@ -14,19 +15,27 @@ import java.util.List;
     setterVisibility = JsonAutoDetect.Visibility.NONE,
     creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TwitterUsersObject extends DataCollection<User> {
+public class TwitterUsersObject implements DataCollectionWithCursor<User> {
+
+  private final List<User> users;
 
   private final long nextCursor;
 
   @JsonCreator
   public TwitterUsersObject(
-      final @JsonProperty("users") List<User> data,
+      final @JsonProperty("users") List<User> users,
       final @JsonProperty("next_cursor") long nextCursor) {
-    super(data);
+    this.users = users;
     this.nextCursor = nextCursor;
   }
 
-  public long nextCursor() {
+  @Override
+  public long cursor() {
     return nextCursor;
+  }
+
+  @Override
+  public Collection<User> data() {
+    return users;
   }
 }

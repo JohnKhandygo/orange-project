@@ -7,8 +7,8 @@ import com.kspt.orange.core.entities.Data;
 import com.kspt.orange.core.entities.DataCollection;
 import com.kspt.orange.core.entities.Query;
 import com.kspt.orange.core.ports.Source;
-import static java.util.Collections.emptyList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
 
@@ -28,7 +28,7 @@ public class Gateway<Q1 extends Query, Q2 extends Query, D extends Data> {
   }
 
   public void forward(final QueryWithLimit<Q1> queryWithLimit) {
-    final Q2 firstQuery = delimiter.next(queryWithLimit.query(), new DataCollection<>(emptyList()));
+    final Q2 firstQuery = delimiter.next(queryWithLimit.query(), Collections::emptyList);
     final DataCollection<D> firstPortion = extractAndEmit(firstQuery);
     final Collection<D> firstPortionData = firstPortion.data();
     int remaining =

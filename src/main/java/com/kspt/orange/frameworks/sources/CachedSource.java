@@ -29,7 +29,7 @@ public class CachedSource<Q extends Query, D extends Data> implements Source<Q, 
   @Override
   public DataCollection<D> get(final Q query) {
     final List<D> data = cached.stream().filter(converter.convert(query)).collect(toList());
-    return new DataCollection<>(data);
+    return () -> data;
   }
 
   public static <Q extends Query, D extends Data>

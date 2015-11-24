@@ -22,7 +22,7 @@ public class TwitterUserInfoSource implements Source<TwitterUserInfoQuery, User>
   }
 
   private DataCollection<User> formDataCollection(final User user) {
-    return new DataCollection<>(singletonList(user));
+    return () -> singletonList(user);
   }
 
   public static TwitterUserInfoSource newOne(final AuthenticationCredentials credentials) {

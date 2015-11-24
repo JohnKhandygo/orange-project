@@ -38,7 +38,7 @@ public class TwitterUserDataSource
     final List<TwitterData> geotaggedData = data.stream()
         .filter(d -> nonNull(d.geo()))
         .collect(toList());
-    return new DataCollection<>(geotaggedData);
+    return () -> geotaggedData;
   }
 
   public static TwitterUserDataSource newOne(final AuthenticationCredentials credentials) {

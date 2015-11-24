@@ -2,9 +2,10 @@ package com.kspt.orange.core.entities;
 
 import java.util.Collection;
 
-public class DataCollection<D extends Data> {
+@FunctionalInterface
+public interface DataCollection<D extends Data> {
 
-  private final Collection<D> data;
+  /*private final Collection<D> data;
 
   public DataCollection(final Collection<D> data) {
     this.data = data;
@@ -12,5 +13,7 @@ public class DataCollection<D extends Data> {
 
   public Collection<D> data() {
     return data;
-  }
+  }*/
+
+  Collection<D> data();
 }

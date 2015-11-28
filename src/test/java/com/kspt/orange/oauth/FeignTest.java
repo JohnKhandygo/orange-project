@@ -3,8 +3,8 @@ package com.kspt.orange.oauth;
 import com.google.common.collect.Lists;
 import com.kspt.orange.frameworks.AuthenticationCredentials;
 import com.kspt.orange.frameworks.api.twitter.TwitterApiBuilder;
-import com.kspt.orange.frameworks.api.twitter.endpoints.users.TwitterUserInfoApi;
-import com.kspt.orange.frameworks.api.twitter.entities.User;
+import com.kspt.orange.frameworks.api.twitter.endpoints.data.TwitterPublicDataApi;
+import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
 import static java.lang.String.format;
 import org.junit.Test;
 import org.scribe.model.Token;
@@ -31,17 +31,12 @@ public class FeignTest {
     final Token userToken = new Token(
         "4235420180-wR8ylQuJh22hh02XJVgHeGdJxWpQIan8SOiVa7s",
         "yVeJHBYwKMB4DzQ997rG8lRZh1kymvf0F0hAoEsdJbh6X");
-    TwitterUserInfoApi api = TwitterApiBuilder.build(
-        TwitterUserInfoApi.class,
+    TwitterPublicDataApi api = TwitterApiBuilder.build(
+        TwitterPublicDataApi.class,
         new AuthenticationCredentials(applicationToken, userToken));
     final ArrayList<String> names = Lists.<String>newArrayList("twitterapi", "twitter");
     final String initial = names.isEmpty() ? "" : names.get(0);
-    final String namesAsString = names.stream().skip(1)
-        .reduce(initial, (a, e) -> a + "," + e, (s1, s2) -> s1 + "," + s2);
-    final User data = api.search(
-        1,
-        //namesAsString,
-        false);
+    final TwitterDataObject search = api.search("twitt", "", 1, null, null, "en", "mixed");
 
     final int a = 1;
   }

@@ -22,13 +22,13 @@ import java.util.List;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Point.class, name = "Point")})
 @JsonIgnoreProperties(ignoreUnknown = true)
-public interface Geo {
+public interface Coordinates {
   double latitude();
 
   double longitude();
 }
 
-class Point implements Geo {
+class Point implements Coordinates {
   private final double latitude;
 
   private final double longitude;
@@ -49,7 +49,7 @@ class Point implements Geo {
   }
 
   @JsonCreator
-  public static Geo fromJson(final @JsonProperty("coordinates") List<Double> coordinates) {
+  public static Coordinates fromJson(final @JsonProperty("coordinates") List<Double> coordinates) {
     Preconditions.checkState(coordinates.size() == 2);
     return new Point(coordinates.get(0), coordinates.get(1));
   }

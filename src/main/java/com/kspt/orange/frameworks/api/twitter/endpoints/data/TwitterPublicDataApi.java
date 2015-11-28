@@ -16,8 +16,8 @@ public interface TwitterPublicDataApi {
       final @QueryParam("q") String query,
       final @QueryParam("geocode") String geocode,
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") long last,
-      final @QueryParam("max_id") long first,
+      final @QueryParam("since_id") Long last,
+      final @QueryParam("max_id") Long first,
       final @QueryParam("lang") String lang,
       final @QueryParam("result_type") String resultType);
 }

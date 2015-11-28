@@ -22,7 +22,7 @@ public class TwitterData implements Data {
 
   private final User user;
 
-  private final Geo geo;
+  private final Coordinates coordinates;
 
   private final Place place;
 
@@ -36,7 +36,7 @@ public class TwitterData implements Data {
       final @JsonProperty("created_at") String createdAt,
       final @JsonProperty("text") String text,
       final @JsonProperty("user") User user,
-      final @JsonProperty("geo") Geo geo,
+      final @JsonProperty("coordinates") Coordinates coordinates,
       final @JsonProperty("place") Place place,
       final @JsonProperty("entities") Entity entity,
       final @JsonProperty("lang") String lang) {
@@ -44,7 +44,7 @@ public class TwitterData implements Data {
     this.createdAt = createdAt;
     this.text = text;
     this.user = user;
-    this.geo = geo;
+    this.coordinates = coordinates;
     this.place = place;
     this.entity = entity;
     this.lang = lang;
@@ -66,8 +66,8 @@ public class TwitterData implements Data {
     return user;
   }
 
-  public Geo geo() {
-    return geo;
+  public Coordinates geo() {
+    return coordinates;
   }
 
   public Place place() {

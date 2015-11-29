@@ -1,7 +1,7 @@
+/*
 package com.kspt.orange.oauth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kspt.orange.frameworks.api.twitter.entities.TwitterDataObject;
 import org.junit.Test;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
@@ -25,8 +25,10 @@ public class TwitterTest {
     Token requestToken = service.getRequestToken();
     String authUrl = service.getAuthorizationUrl(requestToken);
 
-    /*Verifier v = new Verifier("8915314");
-    Token accessToken = service.getAccessToken(requestToken, v);*/
+    */
+/*Verifier v = new Verifier("8915314");
+    Token accessToken = service.getAccessToken(requestToken, v);*//*
+
 
     final Token accessToken = new Token(
         "4235420180-wR8ylQuJh22hh02XJVgHeGdJxWpQIan8SOiVa7s",
@@ -43,3 +45,4 @@ public class TwitterTest {
     final int a = 1;
   }
 }
+*/

@@ -1,7 +1,7 @@
 package com.kspt.orange.application.streams;
 
-public interface Handler<T1, T2> {
+public interface Handler<T> {
   void onError(final Exception exception);
 
-  T2 observe(final T1 element);
+  void onObserve(final T element);
 }

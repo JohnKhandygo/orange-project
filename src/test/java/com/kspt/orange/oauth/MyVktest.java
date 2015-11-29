@@ -1,25 +1,45 @@
 package com.kspt.orange.oauth;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kspt.orange.frameworks.AuthenticationCredentials;
+import com.kspt.orange.frameworks.api.vk_unworked.VkApiBuilder;
+import com.kspt.orange.frameworks.api.vk_unworked.endpoints.VkNewsApi;
+import com.kspt.orange.frameworks.api.vk_unworked.entities.VkDataObject;
+import com.kspt.orange.frameworks.api.vk_unworked.entities.VkNewsPortion;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.VkontakteApi;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
 import org.scribe.model.Token;
-import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import java.util.Scanner;
 
-public class VKTest {
+@Path("token")
+@Produces(MediaType.APPLICATION_JSON)
+interface AuthByPassword {
+
+  @GET
+  public AccessToken auth(
+      final @QueryParam("grant_type") String g,
+      final @QueryParam("client_id") long cid,
+      final @QueryParam("client_secret") String cs,
+      final @QueryParam("username") String u,
+      final @QueryParam("password") String p,
+      final @QueryParam("scope") String s);
+}
+
+public class MyVkTest {
 
   private static final String NETWORK_NAME = "Vkontakte.ru";
-
-  private static final String PROTECTED_RESOURCE_URL = "https://api.vk.com/method/friends.search";
 
   private static final Token EMPTY_TOKEN = null;
 
   public static void main(String[] args) {
-    // Replace these with your client id and secret
     final String clientId = "5160753";
     final String clientSecret = "kNG3HDFLTLJmHxCTN4Yx";
     OAuthService service = new ServiceBuilder()
@@ -52,17 +72,17 @@ public class VKTest {
     System.out.println("(if your curious it looks like this: " + accessToken + " )");
     System.out.println();
 
-    // Now let's go and ask for a protected resource!
-    System.out.println("Now we're going to access a protected resource...");
-    OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL/*, service*/);
-    service.signRequest(accessToken, request);
-    Response response = request.send();
-    System.out.println("Got it! Lets see what we found...");
-    System.out.println();
-    System.out.println(response.getCode());
-    System.out.println(response.getBody());
-
-    System.out.println();
-    System.out.println("Thats it man! Go and build something awesome with ScribeJava! :)");
+    final Token consumerToken = new Token(clientId, clientSecret);
+    final VkNewsApi build = VkApiBuilder
+        .build(VkNewsApi.class, new AuthenticationCredentials(consumerToken, accessToken));
+    final VkDataObject search = build.search(null, null, null, null, 10);
+    final VkNewsPortion portion = search.portion();
+    final int a = 0;
   }
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class AccessToken {
+  @JsonProperty("access_token")
+  public String token;
 }

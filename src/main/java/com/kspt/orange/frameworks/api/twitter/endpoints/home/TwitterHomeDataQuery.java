@@ -1,8 +1,8 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.home;
 
-import com.kspt.orange.core.entities.Query;
+import com.kspt.orange.application.entities.QueryWithCursor;
 
-public class TwitterHomeDataQuery implements Query {
+public class TwitterHomeDataQuery extends QueryWithCursor {
   private final boolean trimUser;
 
   private final boolean excludeReplies;
@@ -12,10 +12,13 @@ public class TwitterHomeDataQuery implements Query {
   private final boolean includeRts;
 
   public TwitterHomeDataQuery(
+      final Integer limit,
+      final Long cursor,
       final boolean trimUser,
       final boolean excludeReplies,
       final boolean contributorsDetails,
       final boolean includeRts) {
+    super(limit, cursor);
     this.trimUser = trimUser;
     this.excludeReplies = excludeReplies;
     this.contributorsDetails = contributorsDetails;

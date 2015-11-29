@@ -2,22 +2,15 @@ package com.kspt.orange.application.entities;
 
 import com.kspt.orange.core.entities.Query;
 
-public class QueryWithLimit<Q extends Query> implements Query {
+public class QueryWithLimit implements Query {
 
-  private final Q query;
+  private final Integer limit;
 
-  private final int limit;
-
-  public QueryWithLimit(final Q query, final int limit) {
-    this.query = query;
+  public QueryWithLimit(final Integer limit) {
     this.limit = limit;
   }
 
-  public Q query() {
-    return query;
-  }
-
-  public int limit() {
+  public Integer limit() {
     return limit;
   }
 }

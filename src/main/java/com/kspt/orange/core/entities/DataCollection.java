@@ -1,19 +1,16 @@
 package com.kspt.orange.core.entities;
 
-import java.util.Collection;
+import java.util.List;
 
-@FunctionalInterface
-public interface DataCollection<D extends Data> {
+public class DataCollection<D extends Data> {
 
-  /*private final Collection<D> data;
+  private final List<D> dataList;
 
-  public DataCollection(final Collection<D> data) {
-    this.data = data;
+  public DataCollection(final List<D> dataList) {
+    this.dataList = dataList;
   }
 
-  public Collection<D> data() {
-    return data;
-  }*/
-
-  Collection<D> data();
+  public List<D> dataList() {
+    return dataList;
+  }
 }

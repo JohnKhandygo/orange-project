@@ -49,7 +49,7 @@ class TwitterRequestInterceptor implements RequestInterceptor {
   public void apply(final RequestTemplate template) {
     final OAuthRequest request = buildAuthenticationRequest(template);
     OAuthService service = buildAuthenticationService();
-    service.signRequest(credentials.userToken(), request);
+    service.signRequest(credentials.accessToken(), request);
     template.header("Authorization", extractAuthenticationHeader(request));
   }
 
@@ -61,8 +61,8 @@ class TwitterRequestInterceptor implements RequestInterceptor {
   private OAuthService buildAuthenticationService() {
     return new ServiceBuilder()
         .provider(TwitterApi.class)
-        .apiKey(credentials.applicationToken().getToken())
-        .apiSecret(credentials.applicationToken().getSecret())
+        .apiKey(credentials.consumerToken().getToken())
+        .apiSecret(credentials.consumerToken().getSecret())
         .build();
   }
 

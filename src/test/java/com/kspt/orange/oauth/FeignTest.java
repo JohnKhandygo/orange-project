@@ -1,3 +1,4 @@
+/*
 package com.kspt.orange.oauth;
 
 import com.google.common.collect.Lists;
@@ -40,4 +41,4 @@ public class FeignTest {
 
     final int a = 1;
   }
-}
+}*/

@@ -1,6 +1,6 @@
 package com.kspt.orange.frameworks.api.twitter.endpoints.home;
 
-import com.kspt.orange.frameworks.api.twitter.entities.TwitterData;
+import com.kspt.orange.frameworks.api.twitter.entities.common.TwitterData;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,7 +15,6 @@ public interface TwitterHomeDataApi {
   @GET
   List<TwitterData> search(
       final @QueryParam("count") int count,
-      final @QueryParam("since_id") Long last,
       final @QueryParam("max_id") Long first,
       final @QueryParam("trim_user") boolean trimUser,
       final @QueryParam("exclude_replies") boolean excludeReplies,

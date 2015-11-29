@@ -4,22 +4,22 @@ import org.scribe.model.Token;
 
 public class AuthenticationCredentials {
 
-  private final Token applicationToken;
+  private final Token consumerToken;
 
-  private final Token userToken;
+  private final Token accessToken;
 
   public AuthenticationCredentials(
-      final Token applicationToken,
-      final Token userToken) {
-    this.applicationToken = applicationToken;
-    this.userToken = userToken;
+      final Token consumerToken,
+      final Token accessToken) {
+    this.consumerToken = consumerToken;
+    this.accessToken = accessToken;
   }
 
-  public Token applicationToken() {
-    return applicationToken;
+  public Token consumerToken() {
+    return consumerToken;
   }
 
-  public Token userToken() {
-    return userToken;
+  public Token accessToken() {
+    return accessToken;
   }
 }
